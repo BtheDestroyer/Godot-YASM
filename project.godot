@@ -1,0 +1,26 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Yet Another Scene Manager"
+run/main_scene="res://addons/yet_another_scene_manager/Scenes/Testing/Test1.tscn"
+config/features=PackedStringArray("4.2", "Forward Plus")
+config/icon="res://addons/yet_another_scene_manager/icon.svg"
+scenes/error_scene_path="res://addons/yet_another_scene_manager/Scenes/Error.tscn"
+scenes/loading_scene_path=""
+
+[autoload]
+
+YASM="*res://addons/yet_another_scene_manager/Scenes.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/yet_another_scene_manager/plugin.cfg")

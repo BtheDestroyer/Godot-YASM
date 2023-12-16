@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0k8lr5ueul67"]
+
+[sub_resource type="GDScript" id="GDScript_7384t"]
+script/source = "@icon(\"./icon.svg\")
+extends Control
+"
+
+[node name="Loading" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_7384t")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9
+anchor_top = 0.75
+anchor_right = 0.9
+anchor_bottom = 0.75
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/italics_font_size = 56
+bbcode_enabled = true
+text = "[wave amp=50 freq=10][i]Loading...[/i][/wave]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0

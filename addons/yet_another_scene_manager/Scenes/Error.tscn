@@ -1,0 +1,81 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlh1jookgcxb0"]
+
+[sub_resource type="GDScript" id="GDScript_0yu32"]
+script/source = "@icon(\"./icon.svg\")
+extends Control
+
+@export var scene_label: Label
+@export var error_label: Label
+
+func _ready():
+  scene_label.text = \"Scene path: \" + YASM.last_loaded_path
+  error_label.text = \"Error: \" + YASM.last_error
+
+func _on_button_pressed():
+  YASM.load_scene(YASM._main_scene_path)
+"
+
+[node name="Error" type="Control" node_paths=PackedStringArray("scene_label", "error_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_0yu32")
+scene_label = NodePath("Label2")
+error_label = NodePath("Label3")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.075
+anchor_top = 0.1
+anchor_right = 0.075
+anchor_bottom = 0.1
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "An error occured when loading a scene..."
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.075
+anchor_top = 0.2
+anchor_right = 0.075
+anchor_bottom = 0.2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "Scene path: {path}"
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.075
+anchor_top = 0.3
+anchor_right = 0.075
+anchor_bottom = 0.3
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "Error: {error}"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.075
+anchor_top = 0.875
+anchor_right = 0.075
+anchor_bottom = 0.875
+grow_vertical = 2
+text = "Load Initial Scene"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
