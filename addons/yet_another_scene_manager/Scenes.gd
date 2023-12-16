@@ -174,14 +174,20 @@ func load_scene(path: String, awaited_signals: Array[Signal] = []):
       cancel_scene_load()
       return
   _preload_emitted = false
-  _awaited_signals = awaited_signals.duplicate()
-  if _awaited_signals.size() > 0:
-    debugger.log_message("[YASM] Awaiting {0} signal(s)".format([_awaited_signals.size()]))
-    for needed_signal in _awaited_signals:
-      if _awaited_signals.count(needed_signal) > 1:
-        debugger.log_warning("[YASM] Awaiting the same signal multiple times will not have the intended effect")
-      _awaited_signal_handlers.append(func(_a = null, _b = null, _c = null, _d = null, _e = null): _handle_signal(needed_signal))
-      needed_signal.connect(_awaited_signal_handlers.back(), CONNECT_ONE_SHOT)
+  _awaited_signals.clear()
+  debugger.log_message("[YASM] Awaiting {0} signal(s)".format([awaited_signals.size()]))
+  if awaited_signals.size() > 0:
+    for needed_signal in awaited_signals:
+      await_additional_signal_for_load(needed_signal)
+
+## Adds signal to the list necessary to finish loading. Will have no effect if not currently loading a scene
+func await_additional_signal_for_load(signal: Signal):
+  if _awaited_signals.has(signal):
+    debugger.log_warning("[YASM] Awaiting the same signal multiple times will not have the intended effect")
+    return
+  _awaited_signals.append(signal)
+  _awaited_signal_handlers.append(func(_a = null, _b = null, _c = null, _d = null, _e = null): _handle_signal(signal))
+  signal.connect(_awaited_signal_handlers.back(), CONNECT_ONE_SHOT)
 
 ## Cancels the current scene load and loads the "error scene" instead.
 func cancel_scene_load():
