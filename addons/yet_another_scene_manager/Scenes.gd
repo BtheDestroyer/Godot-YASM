@@ -181,13 +181,13 @@ func load_scene(path: String, awaited_signals: Array[Signal] = []):
       await_additional_signal_for_load(needed_signal)
 
 ## Adds signal to the list necessary to finish loading. Will have no effect if not currently loading a scene
-func await_additional_signal_for_load(signal: Signal):
-  if _awaited_signals.has(signal):
+func await_additional_signal_for_load(new_signal: Signal):
+  if _awaited_signals.has(new_signal):
     debugger.log_warning("[YASM] Awaiting the same signal multiple times will not have the intended effect")
     return
-  _awaited_signals.append(signal)
-  _awaited_signal_handlers.append(func(_a = null, _b = null, _c = null, _d = null, _e = null): _handle_signal(signal))
-  signal.connect(_awaited_signal_handlers.back(), CONNECT_ONE_SHOT)
+  _awaited_signals.append(new_signal)
+  _awaited_signal_handlers.append(func(_a = null, _b = null, _c = null, _d = null, _e = null): _handle_signal(new_signal))
+  new_signal.connect(_awaited_signal_handlers.back(), CONNECT_ONE_SHOT)
 
 ## Cancels the current scene load and loads the "error scene" instead.
 func cancel_scene_load():
